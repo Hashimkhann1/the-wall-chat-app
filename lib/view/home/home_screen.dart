@@ -47,19 +47,28 @@ class _HomeSceenState extends State<HomeSceen> {
                 if (snapshot.hasData) {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context , index) {
-                        final post = snapshot.data!.docs[index];
-                        final dateTime = (post['TimeStamp'] as Timestamp).toDate();
-                      return WallPosts(message: post['Message'], time: DateFormat('dd/MM/yyyy').format(dateTime), user: post['UserEmail']);
-                    }),
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          final post = snapshot.data!.docs[index];
+                          final dateTime =
+                              (post['TimeStamp'] as Timestamp).toDate();
+                          return WallPosts(
+                              message: post['Message'],
+                              time: DateFormat('dd/MM/yyyy').format(dateTime),
+                              user: post['UserEmail'],
+                            postId: post.id,
+                            likes: List.from(post['Likes'] ?? []),
+                          );
+                        }),
                   );
-                } else if(snapshot.hasError) {
-                  return Center(child: Text("Error: " + snapshot.error.toString()));
-
+                } else if (snapshot.hasError) {
+                  return Center(
+                      child: Text("Error: " + snapshot.error.toString()));
                 }
                 return const Center(
-                  child: CircularProgressIndicator(color: Colors.black87,),
+                  child: CircularProgressIndicator(
+                    color: Colors.black87,
+                  ),
                 );
               }),
           Padding(
@@ -78,26 +87,33 @@ class _HomeSceenState extends State<HomeSceen> {
                 // Post Button
                 InkWell(
                   onTap: () {
-                    if(messageController.text.isNotEmpty){
+                    if (messageController.text.isNotEmpty) {
                       postsServices.addPost(messageController.text.toString());
                       messageController.clear();
                     }
                   },
                   child: Container(
-                    // alignment: Alignment.center,
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(8)
-                    ),
-                    child: Icon(Icons.arrow_circle_up,size: 28,color: Colors.white,)
-                  ),
+                      // alignment: Alignment.center,
+                      padding: EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[400],
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Icon(
+                        Icons.arrow_circle_up,
+                        size: 28,
+                        color: Colors.white,
+                      )),
                 )
               ],
             ),
           ),
-          Text("Logged in as: " + _auth.currentUser!.email.toString(),style: TextStyle(color: Colors.grey),),
-          const SizedBox(height: 20.0,),
+          Text(
+            "Logged in as: " + _auth.currentUser!.email.toString(),
+            style: TextStyle(color: Colors.grey),
+          ),
+          const SizedBox(
+            height: 20.0,
+          ),
         ],
       ),
     );

@@ -16,6 +16,7 @@ class PostsServices {
         "UserEmail" : _auth.currentUser!.email,
         "Message" : message,
         "TimeStamp" : DateTime.now(),
+        "Likes" : [],
       });
     }catch(e) {
       utils.toastMessage("Something went wrong");

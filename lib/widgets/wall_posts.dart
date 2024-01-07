@@ -1,14 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:thewall/data/getx/like_getx.dart';
+import 'package:thewall/widgets/like_button.dart';
 
 class WallPosts extends StatefulWidget {
   final String message;
   final String user;
+  final String postId;
+  final List<String> likes;
   final String time;
 
   const WallPosts({super.key,
     required this.message,
     required this.time,
-    required this.user
+    required this.user,
+    required this.postId,
+    required this.likes
   });
 
   @override
@@ -16,8 +25,14 @@ class WallPosts extends StatefulWidget {
 }
 
 class _WallPostsState extends State<WallPosts> {
+
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  final LikeGetx likeGetx = Get.put(LikeGetx());
+
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -46,6 +61,19 @@ class _WallPostsState extends State<WallPosts> {
                   Text(widget.user.toString(),style: TextStyle(color: Colors.grey[500]),),
                   const SizedBox(height: 6.0,),
                   Text(widget.message.toString()),
+                  const SizedBox(height: 8,),
+                  Obx(() {
+                    return Row(
+                      children: [
+                        Text(widget.likes.length.toString()),
+                        LikeButton(onTap: () {
+                          likeGetx.toggleLike(widget.postId);
+                          print(likeGetx.isLiked.contains(widget.postId));
+                          print(likeGetx.isLiked);
+                        }, isLiked: likeGetx.isLiked.contains(widget.postId)),
+                      ],
+                    );
+                  })
                 ],
               ),
             ],

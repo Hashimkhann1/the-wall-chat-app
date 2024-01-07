@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:thewall/data/getx/like_getx.dart';
 import 'package:thewall/utils/utils.dart';
 import 'package:thewall/view/auth/login_screen.dart';
 import 'package:thewall/view/home/home_screen.dart';
@@ -16,6 +17,7 @@ class AuthService {
   final Utils utils = Utils();
   LoadingServices loadingServices = Get.put(LoadingServices());
   final _auth = FirebaseAuth.instance;
+
 
   void loginuser(BuildContext context ,String email , String password) async {
     loadingServices.setLoaidng();
@@ -63,10 +65,13 @@ class AuthService {
   }
 
   void signOut(BuildContext context) async {
+    final LikeGetx likeGetx = Get.put(LikeGetx());
     try{
       await _auth.signOut().then((value) {
         utils.toastMessage("Logout Successfully");
         Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        likeGetx.isLiked.clear();
+
       }).onError((error, stackTrace) {
         utils.toastMessage("Something went wrong ry again");
       });
