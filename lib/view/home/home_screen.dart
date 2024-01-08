@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:thewall/data/auth_services/authServices.dart';
 import 'package:thewall/data/post_services/post_services.dart';
+import 'package:thewall/widgets/my_drawer.dart';
 import 'package:thewall/widgets/my_text_field.dart';
 import 'package:thewall/widgets/wall_posts.dart';
 
@@ -28,13 +29,9 @@ class _HomeSceenState extends State<HomeSceen> {
         title: Text("The Wall"),
         backgroundColor: Colors.grey[900],
         centerTitle: true,
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              onPressed: () => authService.signOut(context),
-              icon: Icon(Icons.logout))
-        ],
+
       ),
+      drawer: MyDrawer(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

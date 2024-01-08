@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,11 +43,12 @@ class AuthService {
 
   signUp(BuildContext context , String email , String password , String confrimPassword) async {
     loadingServices.setLoaidng();
+
     if(password != confrimPassword){
       utils.toastMessage("Confirm Password not matched");
     }else{
       try{
-        _auth.createUserWithEmailAndPassword(
+        await _auth.createUserWithEmailAndPassword(
             email: email,
             password: password
         ).then((value){
@@ -57,6 +59,12 @@ class AuthService {
           utils.toastMessage(error.toString());
           loadingServices.setLoaidng();
         });
+        if(_auth.currentUser != null){
+          await FirebaseFirestore.instance.collection('Users').doc(email.toString()).set({
+            "Username" : email.split('@')[0],
+            "Bio" : 'Empty Bio'
+          });
+        }
       }on FirebaseAuthException catch(e){
         utils.toastMessage(e.code.toString());
         loadingServices.setLoaidng();
