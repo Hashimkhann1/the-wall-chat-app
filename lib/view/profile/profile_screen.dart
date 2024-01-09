@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            final userData = snapshot.data!.data() as Map<String , dynamic>;
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
             return ListView(
               children: [
                 const SizedBox(
@@ -67,21 +67,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 MyTextBox(
                   text: userData['Username'].toString(),
                   sectionName: 'Username',
-                  onPressed: () => userDataServices.editField(context , 'Username'),
+                  onPressed: () =>
+                      userDataServices.editField(context, 'Username'),
                 ),
                 // bio
                 MyTextBox(
-                    text: userData['Bio'].toString(), sectionName: "Empty Bio", onPressed: () => userDataServices.editField(context, 'Bio'))
+                    text: userData['Bio'].toString(),
+                    sectionName: "Empty Bio",
+                    onPressed: () => userDataServices.editField(context, 'Bio'))
 
                 //user posts
               ],
             );
-          }else if(snapshot.hasError){
+          } else if (snapshot.hasError) {
             return Center(
               child: Text(snapshot.error.toString()),
             );
           }
-          return CircularProgressIndicator(color: Colors.grey[900],);
+          return CircularProgressIndicator(
+            color: Colors.grey[900],
+          );
         },
       ),
     );
