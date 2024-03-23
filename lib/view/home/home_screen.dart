@@ -25,6 +25,7 @@ class _HomeSceenState extends State<HomeSceen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
+      // backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: Text("The Wall"),
         backgroundColor: Colors.grey[900],
