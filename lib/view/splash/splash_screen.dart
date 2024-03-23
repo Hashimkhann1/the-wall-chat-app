@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:thewall/data/splash_services/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,11 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Center(
       child: Text(
         "Connect",
-        style: TextStyle(
-            color: Colors.grey[800],
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold),
-      ),
-    ));
+        style: GoogleFonts.rubikBurned(fontSize: 50,fontWeight: FontWeight.bold)
+    )));
   }
 }
