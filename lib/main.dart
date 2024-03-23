@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:thewall/theme/dark_them.dart';
+import 'package:thewall/theme/light_theme.dart';
 import 'package:thewall/view/splash/splash_screen.dart';
 
 void main() async {
@@ -17,9 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: SplashScreen()
     );
   }
